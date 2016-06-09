@@ -18,9 +18,19 @@ loop do                                             # Server runs forever
   #client.puts(Time.now.ctime)                       # Output the current time to the client
 
 
-  filename = "index.html"
-  response = File.read(filename)
+  filename = lines[0].gsub(/GET \//, '').gsub(/\ HTTP.*/, '')
 
-  client.puts(response)
+  if File.exists?('index.html')
+    response_body = File.read('index.html')
+  else
+    response_body = "File Not Found\n" # need to indicate end of the string with \n
+  end
+  # filename = "index.html"
+  # response = File.read(filename)
+
+  client.puts(response_body)
   client.close                                      # Disconnect from the client
+
+
+
 end
